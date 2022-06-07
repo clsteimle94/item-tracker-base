@@ -1,0 +1,37 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>item tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="save-container">
+        <button id="saveBtn" class="savebutton">Save</button>
+        <button id="loadBtn" class="loadbutton">Load</button>
+        
+        <button id="saveFile" class="downloadbutton">Download Save</button>
+        <input id="fileToLoad" class="loadedfile" type="file"/>
+    </div> 
+    
+    <div id="tracker" class="tracker-container">
+        <div id="collectables" class="collectables-container">
+            
+            <div id="upgrades" class="upgrade-container"></div>
+            <div id="partners" class="partner-container"></div>
+            
+        </div>
+
+        <div id="blankspace"> </div>
+
+        <div id="counters" class="counter-container">
+            <div>Left/Right Click (max:10) </div>
+        </div>
+    </div>
+
+    <script src="js/tracker.js"></script>
+</body>
+
+</html>
