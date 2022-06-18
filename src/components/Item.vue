@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { updateTrackerItem } from "../logic";
+
 /**
  * @typedef {import('./../items').Item} Item
  */
@@ -48,7 +50,13 @@ export default {
             }
 
             this.item.state = state;
+
+            // Logic Check
+            updateTrackerItem(this.item);
         },
+    },
+    mounted() {
+        updateTrackerItem(this.item);
     },
 };
 </script>

@@ -62,6 +62,14 @@
                     @counter="(value) => (counters[counter] = value)"
                 />
             </div>
+
+            <div id="blankspace"></div>
+
+            <div id="logic" class="logic-container">
+                <div>Chapter 1</div>
+                <div id="ch1Check" class="logicCheck">No</div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -70,6 +78,7 @@
 import Counter from "./components/Counter.vue";
 import Item from "./components/Item.vue";
 import { partnerList, upgradeList } from "./items";
+import { loadTrackerState } from "./logic";
 import "./app.css";
 
 export default {
@@ -130,6 +139,12 @@ export default {
             });
 
             this.counters = saveObj.counters;
+
+            loadTrackerState(
+                this.counters,
+                this.partners,
+                this.upgrades
+            );
         },
 
         localLoad() {

@@ -20,16 +20,16 @@ body {
 
 .tracker-container {
     background: linear-gradient(rgba(132, 255, 116, 0.4), rgba(0, 66, 3, 0.4)),
-        black url(/pic/bg.png) repeat;
+        black url(./assets/pic/bg.png) repeat;
 
     display: grid;
     justify-content: center;
     grid-template-columns: 320px;
-    grid-template-rows: 90px 20px 50px; /* sum of these is the height minimum */
+    grid-template-rows: 90px 20px 50px 20px; /* sum of these is the height minimum */
     padding: 12px;
     border-radius: 8px;
     width: 400px;
-    height: 180px;
+    height: 280px;
     margin: 0 auto;
 }
 
@@ -75,6 +75,25 @@ body {
     text-align: center;
     user-select: none;
 }
+
+
+.logic-container {
+    background: linear-gradient(
+            rgba(142, 223, 255, 0.4),
+            rgba(24, 78, 114, 0.4)
+        ),
+        black url(./assets/pic/bg.png) repeat;
+
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 250px 32px;
+    grid-template-rows: 32px;
+    padding: 4px;
+    border-radius: 8px;
+    text-align: center;
+    user-select: none;
+}
+
 
 #counter1 {
     background: linear-gradient(
