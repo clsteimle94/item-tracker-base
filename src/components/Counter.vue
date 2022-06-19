@@ -5,7 +5,7 @@
         @click.prevent="increment()"
         @contextmenu.prevent="decrement()"
     >
-        {{ value }}
+        {{ value }} / {{ max }}
     </div>
 </template>
 
@@ -52,6 +52,7 @@ export default {
             }
 
             this.$emit("counter", value);
+            
         },
     },
 };

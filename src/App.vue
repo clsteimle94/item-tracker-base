@@ -23,6 +23,7 @@
             >
                 Download Save
             </button>
+
             <input
                 ref="fileInput"
                 @change.prevent="uploadSave()"
@@ -53,7 +54,7 @@
             <div id="blankspace"></div>
 
             <div id="counters" class="counter-container">
-                <div>Left/Right Click (max:10)</div>
+                <div>Counter: </div>
                 <Counter
                     v-for="counter in Object.keys(counters)"
                     :key="counter"

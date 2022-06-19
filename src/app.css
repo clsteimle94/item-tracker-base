@@ -68,12 +68,22 @@ body {
 
     display: grid;
     justify-content: center;
-    grid-template-columns: 250px 32px;
+    grid-template-columns: 220px 80px;
     grid-template-rows: 32px;
-    padding: 4px;
+    padding: 8px;
     border-radius: 8px;
     text-align: center;
     user-select: none;
+}
+#counter1 {
+    background: linear-gradient(
+        rgba(212, 212, 212, 0.3),
+        rgba(94, 94, 94, 0.3)
+    );
+
+    padding: 4px;
+    border-radius: 8px;
+    border: 2px solid rgba(95, 95, 95, 0.7);
 }
 
 
@@ -95,17 +105,6 @@ body {
 }
 
 
-#counter1 {
-    background: linear-gradient(
-        rgba(212, 212, 212, 0.3),
-        rgba(94, 94, 94, 0.3)
-    );
-
-    padding: 4px;
-    border-radius: 8px;
-    border: 2px solid rgba(95, 95, 95, 0.7);
-}
-
 .grid-item {
     background-repeat: no-repeat;
     background-position: center;
@@ -115,11 +114,11 @@ body {
 .save-container {
     display: grid;
     justify-content: center;
-    width: 400px;
+    width: 300px;
     margin: 0 auto;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: minmax(30px, auto);
-    gap: 10px;
+    gap: 0px;
     padding: 4px;
 }
 .savebutton {
@@ -131,15 +130,11 @@ body {
     grid-row: 1;
 }
 .downloadbutton {
-    grid-column: 3 / 3;
-    grid-row: 1;
-}
-.loadedfile {
-    grid-column: 1 / 3;
+    grid-column: 1 / 1;
     grid-row: 2;
 }
-.uploadbutton {
-    grid-column: 3 / 3;
+.loadedfile {
+    grid-column: 2 / 2;
     grid-row: 2;
 }
 
@@ -150,9 +145,24 @@ button {
     text-align: center;
     font-size: 14px;
     background-color: rgb(231, 231, 231);
-    border: 2px solid rgba(95, 95, 95, 0.9);
+    border: 1px solid rgba(95, 95, 95, 0.9);
+    cursor: pointer;
 }
 
 button:focus {
     outline: none;
+}
+
+
+.loadedfile::before {
+    content: 'Upload Save';
+    display: inline-block;
+    color: black;
+    font-family: Calibri;
+    text-align: center;
+    font-size: 14px;
+    background-color: rgb(231, 231, 231);
+    border: 1px solid rgba(95, 95, 95, 0.9);
+    padding: 6px 39px;
+    cursor: pointer;
 }
