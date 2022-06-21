@@ -2,7 +2,7 @@ export let trackerState = {
     "tracker" : new Map(),
 };
 
-export function loadTrackerState(partners,upgrades,counters) {
+export function loadTrackerState(partners,upgrades,counters,countables) {
     partners.forEach((value) => {
         trackerState.tracker.set(value.id, value.state);
     });
@@ -12,6 +12,10 @@ export function loadTrackerState(partners,upgrades,counters) {
     });
 
     trackerState.tracker.set("counter1", counters.counter1);
+
+    countables.forEach((value) => {
+        trackerState.tracker.set(value.id, value.state);
+    });
 
     ch1Check();
 }

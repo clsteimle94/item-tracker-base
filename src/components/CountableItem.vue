@@ -4,22 +4,27 @@
         @contextmenu.prevent="toggle(true)"
     >
         <div class="grid">
+
             <div class="itemSlot"
                 :class="{ checked: this.item.state != 0 }"
                 :id="item.id"
                 :style="`background-image: url('${pic}')`"
             ></div>
+
             <div class="countSlot"
                 :id="`${item.id}counter`"
                 :style="`color: ${countColor}`"
             >
-                {{ value }} / {{ this.item.count }}
+                {{ this.item.state  }} / {{ this.item.max }}
             </div>
+
         </div>
     </div>
 </template>
 
 <script>
+import { updateTrackerItem } from "../logic";
+
 export default {
     name: "CountableItem",
 
@@ -30,17 +35,11 @@ export default {
         },
     },
 
-    data() {
-        return {
-            value: 0
-        }
-    },
-
     computed: {
         countColor() {
-            if (this.value >= this.item.count)
+            if (this.item.state >= this.item.max)
                 return "darkgreen";
-            else if (this.value <= 0)
+            else if (this.item.state <= 0)
                 return "darkred";
             return "black";
         },
@@ -52,17 +51,17 @@ export default {
 
     methods: {
         increment() {
-            this.value += 1;
+            this.item.state += 1;
 
-            if (this.value >= this.item.count) {
-                this.value = this.item.count;
+            if (this.item.state >= this.item.max) {
+                this.item.state = this.item.max;
             }
         },
         decrement() {
-            this.value -= 1;
+            this.item.state-= 1;
 
-            if (this.value < 0) {
-                this.value = 0;
+            if (this.item.state < 0) {
+                this.item.state = 0;
             }
         },
 
@@ -72,14 +71,21 @@ export default {
             if(isRightClick) this.decrement();
             else this.increment();
 
-            if (state > this.item.count) {
-                state = this.item.count;
+            if (state > this.item.max) {
+                state = this.item.max;
             } else if (state < 0) {
                 state = 0;
             }
 
             this.item.state = state;
+            
+            // Logic Check
+            updateTrackerItem(this.item);
         },
+    },
+    
+    mounted() {
+        updateTrackerItem(this.item);
     },
 };
 </script>

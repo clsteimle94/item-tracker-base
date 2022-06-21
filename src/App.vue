@@ -1,37 +1,39 @@
 <template>
     <div id="app">
-        <div class="save-container">
-            <button
-                @click.prevent="localSave()"
-                id="saveBtn"
-                class="savebutton"
-            >
-                Save
-            </button>
-            <button
-                @click.prevent="localLoad()"
-                id="loadBtn"
-                class="loadbutton"
-            >
-                Load
-            </button>
+        <nav>
+            <div class="save-container">
+                <button
+                    @click.prevent="localSave()"
+                    id="saveBtn"
+                    class="savebutton"
+                >
+                    Save
+                </button>
+                <button
+                    @click.prevent="localLoad()"
+                    id="loadBtn"
+                    class="loadbutton"
+                >
+                    Load
+                </button>
 
-            <button
-                @click.prevent="downloadSave()"
-                id="saveFile"
-                class="downloadbutton"
-            >
-                Download Save
-            </button>
+                <button
+                    @click.prevent="downloadSave()"
+                    id="saveFile"
+                    class="downloadbutton"
+                >
+                    Download Save
+                </button>
 
-            <input
-                ref="fileInput"
-                @change.prevent="uploadSave()"
-                id="fileToLoad"
-                class="loadedfile"
-                type="file"
-            />
-        </div>
+                <input
+                    ref="fileInput"
+                    @change.prevent="uploadSave()"
+                    id="fileToLoad"
+                    class="loadedfile"
+                    type="file"
+                />
+            </div>
+        </nav>
 
         <div id="tracker" class="tracker-container">
             <div id="collectables" class="collectables-container">
@@ -74,12 +76,11 @@
             <div id="blankspace"></div>
 
             <div id="countables" class="countables-container">
-                <CountableItem 
-                    :item="countableTest"
-                />
-                <CountableItem 
-                    :item="countableTest2"
-                />
+                <CountableItem
+                        v-for="item in countables"
+                        :key="item.id"
+                        :item="item"
+                    />
             </div>
 
         </div>
@@ -90,7 +91,7 @@
 import Counter from "./components/Counter.vue";
 import Item from "./components/Item.vue";
 import CountableItem from "./components/CountableItem.vue"
-import { partnerList, upgradeList } from "./items";
+import { partnerList, upgradeList, countableList } from "./items";
 import { loadTrackerState } from "./logic";
 import "./app.css";
 
@@ -110,20 +111,7 @@ export default {
             },
             partners: partnerList,
             upgrades: upgradeList,
-            countableTest: {
-                id: "watt",
-                itemPool: 1,
-                state: 0,
-                pics: [require("./assets/pic/sample-icons/partners/watt.png")],
-                count: 3,
-            },
-            countableTest2: {
-                id: "bow",
-                itemPool: 1,
-                state: 0,
-                pics: [require("./assets/pic/sample-icons/partners/bow.png")],
-                count: 12,
-            },
+            countables: countableList,
         };
     },
 
@@ -166,12 +154,18 @@ export default {
                 item.state = saveObj.items.upgrades[key];
             });
 
+            Object.keys(saveObj.items.countables).forEach((key) => {
+                const item = this.countables.find((item) => item.id == key);
+                item.state = saveObj.items.countables[key];
+            });
+
             this.counters = saveObj.counters;
 
             loadTrackerState(
                 this.partners,
                 this.upgrades,
-                this.counters
+                this.counters,
+                this.countables,
             );
         },
 
@@ -189,6 +183,7 @@ export default {
         stateToJson() {
             const partners = {};
             const upgrades = {};
+            const countables = {};
 
             this.partners.map((item) => {
                 partners[item.id] = item.state;
@@ -198,11 +193,16 @@ export default {
                 upgrades[item.id] = item.state;
             });
 
+            this.countables.map((item) => {
+                countables[item.id] = item.state;
+            });
+
             return JSON.stringify({
                 counters: this.counters,
                 items: {
                     partners,
                     upgrades,
+                    countables,
                 },
             });
         },
@@ -226,3 +226,16 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+nav {
+    background-color: rgb(26, 26, 26);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    position: fixed;
+    box-sizing: border-box;
+    z-index:1;
+    border-bottom: 1px solid black;
+}
+</style>
