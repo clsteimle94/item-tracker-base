@@ -3,7 +3,6 @@
         @click.prevent="toggle(false)"
         @contextmenu.prevent="toggle(true)"
         :id="item.id"
-        class="grid-item"
         :class="{ checked: item.state != 0 }"
         :style="`background-image: url('${pic}')`"
     ></div>
@@ -17,6 +16,7 @@ import { updateTrackerItem } from "../logic";
  */
 export default {
     name: "Item",
+    
     props: {
         /** @type {{ new (): Item }} */
         item: {
@@ -24,6 +24,7 @@ export default {
             required: true,
         },
     },
+
     computed: {
         /**
          * @returns {string}
@@ -36,6 +37,7 @@ export default {
             return this.item.pics[this.item.state - 1];
         },
     },
+
     methods: {
         /**
          * @param {boolean} isRightClick
@@ -55,6 +57,7 @@ export default {
             updateTrackerItem(this.item);
         },
     },
+    
     mounted() {
         updateTrackerItem(this.item);
     },
@@ -65,10 +68,19 @@ export default {
 div.checked {
     filter: grayscale(0%);
     opacity: 1;
+    background-repeat: no-repeat;
+    background-position: center;
+    user-select: none;
+    cursor: pointer;
 }
 
 div {
     filter: grayscale(90%);
     opacity: 0.4;
+    background-repeat: no-repeat;
+    background-position: center;
+    user-select: none;
+    cursor: pointer;
 }
+
 </style>

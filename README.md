@@ -1,4 +1,4 @@
-# beek-demo
+# item-tracker-base
 
 ## Project setup
 ```

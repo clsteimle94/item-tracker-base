@@ -71,6 +71,17 @@
                 <div id="ch1Check" class="logicCheck">No</div>
             </div>
 
+            <div id="blankspace"></div>
+
+            <div id="countables" class="countables-container">
+                <CountableItem 
+                    :item="countableTest"
+                />
+                <CountableItem 
+                    :item="countableTest2"
+                />
+            </div>
+
         </div>
     </div>
 </template>
@@ -78,6 +89,7 @@
 <script>
 import Counter from "./components/Counter.vue";
 import Item from "./components/Item.vue";
+import CountableItem from "./components/CountableItem.vue"
 import { partnerList, upgradeList } from "./items";
 import { loadTrackerState } from "./logic";
 import "./app.css";
@@ -88,6 +100,7 @@ export default {
     components: {
         Counter,
         Item,
+        CountableItem,
     },
 
     data() {
@@ -97,6 +110,20 @@ export default {
             },
             partners: partnerList,
             upgrades: upgradeList,
+            countableTest: {
+                id: "watt",
+                itemPool: 1,
+                state: 0,
+                pics: [require("./assets/pic/sample-icons/partners/watt.png")],
+                count: 3,
+            },
+            countableTest2: {
+                id: "bow",
+                itemPool: 1,
+                state: 0,
+                pics: [require("./assets/pic/sample-icons/partners/bow.png")],
+                count: 12,
+            },
         };
     },
 
@@ -129,12 +156,12 @@ export default {
         jsonToState(json) {
             const saveObj = JSON.parse(json);
 
-            Object.keys(saveObj.items.partners).map((key) => {
+            Object.keys(saveObj.items.partners).forEach((key) => {
                 const item = this.partners.find((item) => item.id == key);
                 item.state = saveObj.items.partners[key];
             });
 
-            Object.keys(saveObj.items.upgrades).map((key) => {
+            Object.keys(saveObj.items.upgrades).forEach((key) => {
                 const item = this.upgrades.find((item) => item.id == key);
                 item.state = saveObj.items.upgrades[key];
             });
@@ -142,9 +169,9 @@ export default {
             this.counters = saveObj.counters;
 
             loadTrackerState(
-                this.counters,
                 this.partners,
-                this.upgrades
+                this.upgrades,
+                this.counters
             );
         },
 

@@ -1,5 +1,5 @@
 {
-    "name": "beek-demo",
+    "name": "item-tracker-base",
     "version": "0.1.0",
     "private": true,
     "scripts": {
