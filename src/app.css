@@ -11,32 +11,39 @@ html {
 
 
 body {
-    background: linear-gradient(rgba(34, 34, 34, 0.9), rgba(15, 15, 15, 0.9)),
+    background: linear-gradient(
+            rgba(34, 34, 34, 0.9),
+            rgba(15, 15, 15, 0.9)
+        ),
         black url(./assets/pic/bg.png) repeat;
 
     color: black;
-    font-family: Calibri; /* custom font */
-    /*font-weight: bold;*/
+    font-family: Calibri;
     font-size: 14px;
+
     margin: 0;
 }
 
 
 .tracker-container {
-    background: linear-gradient(rgba(132, 255, 116, 0.4), rgba(0, 66, 3, 0.4)),
+    background: linear-gradient(
+            rgba(132, 255, 116, 0.4), 
+            rgba(0, 66, 3, 0.4)
+        ),
         black url(./assets/pic/bg.png) repeat;
 
     font-family: PM Font, Calibri; /* custom font */
     font-size: 18px;
+
     display: grid;
     justify-content: center;
     grid-template-columns: 320px;
-    grid-template-rows: 84px 20px 44px 20px 44px 20px 44px; /* sum of these is the height minimum */
+    grid-template-rows: 84px 20px 44px 20px 44px 20px 44px;
+
     padding: 12px;
-    border-radius: 8px;
-    width: 340px;
-    height: 280px;
     margin: 0;
+    border-radius: 8px;
+
     position: absolute;
     top: 50%;
     left: 50%;
@@ -52,16 +59,17 @@ body {
         ),
         black url(./assets/pic/bg.png) repeat;
 
-    border-radius: 8px;
     border: 2px solid rgba(95, 95, 95, 0.7);
+    border-radius: 8px;
 }
 
 
 .upgrade-container {
     display: grid;
     justify-content: center;
-    grid-template-columns: 32px 32px 32px;
-    grid-template-rows: 32px;
+    grid-template-columns: repeat(3, 32px);
+    grid-auto-rows: 32px;
+
     padding: 4px;
 }
 
@@ -69,8 +77,9 @@ body {
 .partner-container {
     display: grid;
     justify-content: center;
-    grid-template-columns: 32px 32px 32px 32px 32px 32px 32px 32px;
-    grid-template-rows: 32px;
+    grid-template-columns: repeat(8, 32px);
+    grid-auto-rows: 32px; 
+
     padding: 4px;
 }
 
@@ -82,17 +91,20 @@ body {
         ),
         black url(./assets/pic/bg.png) repeat;
 
-    display: grid;
-    justify-content: left;
-    grid-template-columns: 220px 80px;
-    grid-template-rows: 32px;
-    padding: 4px;
-    border-radius: 8px;
     line-height: 30px;
     text-align: center;
     user-select: none;
+
+    display: grid;
+    justify-content: left;
+    grid-template-columns: 220px 80px;
+    grid-auto-rows: 32px;
+
+    padding: 4px;
     border: 2px solid rgba(95, 95, 95, 0.7);
+    border-radius: 8px;
 }
+
 
 .logic-container {
     background: linear-gradient(
@@ -101,75 +113,20 @@ body {
         ),
         black url(./assets/pic/bg.png) repeat;
 
-    display: grid;
-    justify-content: left;
-    grid-template-columns: 240px 32px;
-    grid-template-rows: 32px;
-    padding: 4px;
-    border-radius: 8px;
     line-height: 30px;
     text-align: center;
     user-select: none;
-    border: 2px solid rgba(95, 95, 95, 0.7);
-}
 
-.save-container {
     display: grid;
-    justify-content: center;
-    width: 500px;
-    margin: 0 auto;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: minmax(30px, auto);
-    gap: 0px;
+    justify-content: left;
+    grid-template-columns: 240px 32px;
+    grid-auto-rows: 32px;
+
     padding: 4px;
-}
-.savebutton {
-    grid-column: 1 / 1;
-    grid-row: 1;
-}
-.loadbutton {
-    grid-column: 2 / 2;
-    grid-row: 1;
-}
-.downloadbutton {
-    grid-column: 3 / 3;
-    grid-row: 1;
-}
-.loadedfile {
-    grid-column: 4 / 4;
-    grid-row: 1;
+    border: 2px solid rgba(95, 95, 95, 0.7);
+    border-radius: 8px;
 }
 
-
-button {
-    color: white;
-    font-family: Calibri;
-    /*font-weight: bold;*/
-    text-align: center;
-    font-size: 14px;
-    background-color: rgb(37, 37, 37);
-    border: 1px solid rgba(58, 58, 58, 0.9);
-    user-select: none;
-    cursor: pointer;
-}
-
-button:focus {
-    outline: none;
-}
-
-
-.loadedfile::before {
-    content: 'Upload Save';
-    display: inline-block;
-    color: white;
-    font-family: Calibri;
-    text-align: center;
-    font-size: 14px;
-    background-color: rgb(37, 37, 37);
-    border: 1px solid rgba(58, 58, 58, 0.9);
-    padding: 6px 28px;
-    cursor: pointer;
-}
 
 .countables-container {
     background: linear-gradient(
@@ -181,8 +138,55 @@ button:focus {
     display: grid;
     justify-content: center;
     grid-template-columns: 100px 100px;
-    grid-template-rows: 32px;
+    grid-auto-rows: 32px;
+
     padding: 4px;
-    border-radius: 8px;
     border: 2px solid rgba(95, 95, 95, 0.7);
+    border-radius: 8px;
+}
+
+
+.save-container {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 32px;
+
+    width: 500px;
+    padding: 4px;
+    margin: 0 auto;
+}
+
+
+button {
+    color: white;
+    font-family: Calibri;
+    font-size: 14px;
+    text-align: center;
+    user-select: none;
+
+    background-color: rgb(37, 37, 37);
+    border: 1px solid rgba(58, 58, 58, 0.9);
+
+    cursor: pointer;
+}
+button:focus {
+    outline: none;
+}
+
+
+.loadedfile::before {
+    content: 'Upload Save';
+    display: inline-block;
+
+    color: white;
+    font-family: Calibri;
+    font-size: 14px;
+    text-align: center;
+
+    background-color: rgb(37, 37, 37);
+    border: 1px solid rgba(58, 58, 58, 0.9);
+    padding: 6px 28px;
+
+    cursor: pointer;
 }

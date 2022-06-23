@@ -1,54 +1,53 @@
-export let trackerState = {
-    "tracker" : new Map(),
-};
+export let trackerMap = new Map();
 
-export function loadTrackerState(partners,upgrades,counters,countables) {
-    partners.forEach((value) => {
-        trackerState.tracker.set(value.id, value.state);
+export function updateMap(trackerState) {
+    trackerState.upgrades.forEach(element => {
+        trackerMap.set(element.id, element.state);
     });
 
-    upgrades.forEach((value) => {
-        trackerState.tracker.set(value.id, value.state);
+    trackerState.partners.forEach(element => {
+        trackerMap.set(element.id, element.state);
     });
 
-    trackerState.tracker.set("counter1", counters.counter1);
-
-    countables.forEach((value) => {
-        trackerState.tracker.set(value.id, value.state);
+    trackerState.counters.forEach(element => {
+        trackerMap.set(element.id, element.state);
     });
 
+    trackerState.countables.forEach(element => {
+        trackerMap.set(element.id, element.state);
+    });
+}
+
+export function updateItem(element) {
+    trackerMap.set(element.id, element.state);
+}
+
+
+export function updateLogic() {
     ch1Check();
 }
 
-export function updateTrackerItem(item) {
-    trackerState.tracker.set(item.id, item.state);
-    // console.log(item.id, item.state);
-    ch1Check();
+
+export function ch1Check() {
+    const requirements = ["kooper", "bombette"];
+    logicCheck("ch1Check", requirements);
 }
 
-export function logicCheck(requirements) {
+
+export function logicCheck(elemId, requirements) {
     let flag = true;
-    let elem = document.getElementById("ch1Check")
+    let elem = document.getElementById(elemId);
     
     for (let i = 0; i < requirements.length; i++) {
-        if ( !trackerState.tracker.get(requirements[i]) ) flag = false;  
+        if ( !trackerMap.get(requirements[i]) ) flag = false;  
     }
 
     if (flag) {
         elem.innerHTML = "Yes";
         elem.style.color = "darkgreen";
-        
     }
     else {
         elem.innerHTML = "No";
         elem.style.color = "darkred";
-        
     }
-
-    // console.log(trackerState.tracker);
-}
-
-export function ch1Check() {
-    const requirements = ["kooper", "bombette"];
-    logicCheck(requirements);
 }

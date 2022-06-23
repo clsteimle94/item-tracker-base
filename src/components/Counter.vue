@@ -1,71 +1,59 @@
 <template>
     <div
-        :id="id"
-        class="counter"
         @click.prevent="increment()"
         @contextmenu.prevent="decrement()"
+        :id=this.counter.id
+        class="counter"
         :style="`color: ${countColor}`"
     >
-        {{ value }} / {{ max }}
+        {{ this.counter.state }} / {{ this.counter.max }}
     </div>
 </template>
 
 <script>
+
 export default {
     name: "Counter",
 
     props: {
-        id: {
-            type: String,
+        /** @type {{ new (): Counter }} */
+        counter: {
+            type: Object,
             required: true,
         },
+
         deltaValue: {
             type: Number,
             default: () => 1,
-        },
-        max: {
-            type: Number,
-            default: () => 10,
-        },
-        value: {
-            type: Number,
-            required: true,
         },
     },
 
     computed: {
         countColor() {
-            if (this.value >= this.max)
-                return "darkgreen";
-            else if (this.value <= 0)
-                return "darkred";
+            if (this.counter.state >= this.counter.max)
+                return "PaleGreen";
+            else if (this.counter.state <= 0)
+                return "#808080";
             return "black";
         }
     },
 
     methods: {
         increment() {
-            let value = this.value;
+            this.counter.state += this.deltaValue;
 
-            value += this.deltaValue;
-
-            if (value > this.max) {
-                value = this.max;
+            if (this.counter.state > this.counter.max) {
+                this.counter.state = this.counter.max;
             }
-
-            this.$emit("counter", value);
-            
+            this.$emit("counterEv", this.counter);
         },
         decrement() {
-            let value = this.value;
+            this.counter.state -= this.deltaValue;
 
-            value -= this.deltaValue;
-
-            if (value < 0) {
-                value = 0;
+            if (this.counter.state < 0) {
+                this.counter.state = 0;
             }
-
-            this.$emit("counter", value);
+            this.$emit("counterEv", this.counter);
         },
     },
 };

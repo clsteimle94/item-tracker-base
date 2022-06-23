@@ -39,16 +39,18 @@
             <div id="collectables" class="collectables-container">
                 <div id="upgrades" class="upgrade-container">
                     <Item
-                        v-for="item in upgrades"
+                        v-for="item in trackerState.upgrades"
                         :key="item.id"
                         :item="item"
+                        @itemEv="fetchData($event)"
                     />
                 </div>
                 <div id="partners" class="partner-container">
                     <Item
-                        v-for="item in partners"
+                        v-for="item in trackerState.partners"
                         :key="item.id"
                         :item="item"
+                        @itemEv="fetchData($event)"
                     />
                 </div>
             </div>
@@ -57,12 +59,9 @@
 
             <div id="counters" class="counter-container">
                 <div>Counter: </div>
-                <Counter
-                    v-for="counter in Object.keys(counters)"
-                    :key="counter"
-                    :id="counter"
-                    :value="counters[counter]"
-                    @counter="(value) => (counters[counter] = value)"
+                <Counter 
+                    :counter="trackerState.counters[0]"
+                    @counterEv="fetchData($event)"
                 />
             </div>
 
@@ -77,9 +76,10 @@
 
             <div id="countables" class="countables-container">
                 <CountableItem
-                        v-for="item in countables"
+                        v-for="item in trackerState.countables"
                         :key="item.id"
                         :item="item"
+                        @itemEv="fetchData($event)"
                     />
             </div>
 
@@ -91,8 +91,8 @@
 import Counter from "./components/Counter.vue";
 import Item from "./components/Item.vue";
 import CountableItem from "./components/CountableItem.vue"
-import { partnerList, upgradeList, countableList } from "./items";
-import { loadTrackerState } from "./logic";
+import { trackerContent } from "./items";
+import { updateLogic, updateItem, updateMap } from "./logic";
 import "./app.css";
 
 export default {
@@ -106,12 +106,7 @@ export default {
 
     data() {
         return {
-            counters: {
-                counter1: 0,
-            },
-            partners: partnerList,
-            upgrades: upgradeList,
-            countables: countableList,
+            trackerState: trackerContent,
         };
     },
 
@@ -138,73 +133,12 @@ export default {
             );
         },
 
-        /**
-         * @param {string} json
-         */
-        jsonToState(json) {
-            const saveObj = JSON.parse(json);
-
-            Object.keys(saveObj.items.partners).forEach((key) => {
-                const item = this.partners.find((item) => item.id == key);
-                item.state = saveObj.items.partners[key];
-            });
-
-            Object.keys(saveObj.items.upgrades).forEach((key) => {
-                const item = this.upgrades.find((item) => item.id == key);
-                item.state = saveObj.items.upgrades[key];
-            });
-
-            Object.keys(saveObj.items.countables).forEach((key) => {
-                const item = this.countables.find((item) => item.id == key);
-                item.state = saveObj.items.countables[key];
-            });
-
-            this.counters = saveObj.counters;
-
-            loadTrackerState(
-                this.partners,
-                this.upgrades,
-                this.counters,
-                this.countables,
-            );
-        },
-
         localLoad() {
             this.jsonToState(localStorage.getItem("trackerBaseSave"));
         },
 
         localSave() {
             localStorage.setItem("trackerBaseSave", this.stateToJson());
-        },
-
-        /**
-         * @return {string}
-         */
-        stateToJson() {
-            const partners = {};
-            const upgrades = {};
-            const countables = {};
-
-            this.partners.map((item) => {
-                partners[item.id] = item.state;
-            });
-
-            this.upgrades.map((item) => {
-                upgrades[item.id] = item.state;
-            });
-
-            this.countables.map((item) => {
-                countables[item.id] = item.state;
-            });
-
-            return JSON.stringify({
-                counters: this.counters,
-                items: {
-                    partners,
-                    upgrades,
-                    countables,
-                },
-            });
         },
 
         uploadSave() {
@@ -222,6 +156,28 @@ export default {
                 fileReader.readAsText(file, "UTF-8");
                 this.$refs.fileInput.value = null;
             }
+        },
+
+        /** Loading
+         * @param {string} json
+         */
+        jsonToState(json) {
+            this.trackerState = JSON.parse(json);
+            updateMap(this.trackerState);
+            updateLogic();
+        },
+
+        /** Saving
+         * @return {string}
+         */
+        stateToJson() {
+            return JSON.stringify(this.trackerState, null, 4);
+        },
+
+
+        fetchData(data) {
+            updateItem(data);
+            updateLogic();
         },
     },
 };

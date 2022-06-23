@@ -8,7 +8,7 @@
             <div class="itemSlot"
                 :class="{ checked: this.item.state != 0 }"
                 :id="item.id"
-                :style="`background-image: url('${pic}')`"
+                :style="`background-image: url('${this.item.pic}')`"
             ></div>
 
             <div class="countSlot"
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import { updateTrackerItem } from "../logic";
 
 export default {
     name: "CountableItem",
@@ -38,14 +37,10 @@ export default {
     computed: {
         countColor() {
             if (this.item.state >= this.item.max)
-                return "darkgreen";
+                return "PaleGreen";
             else if (this.item.state <= 0)
-                return "darkred";
+                return "#808080";
             return "black";
-        },
-        
-        pic() {
-            return this.item.pics[0];
         },
     },
 
@@ -78,22 +73,19 @@ export default {
             }
 
             this.item.state = state;
-            
-            // Logic Check
-            updateTrackerItem(this.item);
+            this.$emit("itemEv", this.item);
         },
     },
     
     mounted() {
-        updateTrackerItem(this.item);
+        this.$emit("itemEv", this.item);
     },
 };
 </script>
 
 <style scoped>
 .countableItem {
-    /* border: 2px solid red; */
-    width: 70px
+    width: 76px;
 }
 
 div {
@@ -111,16 +103,17 @@ div {
 
 .itemSlot {
     filter: grayscale(90%);
-    opacity: 0.6;
+    opacity: 0.4;
 }
 
 .countSlot {
-    font-size: 12px;
+    font-size: 10px;
+    font-weight: bold;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: 32px 80px;
+    grid-template-columns: 32px 44px;
     grid-template-rows: 32px;
     line-height: 50px;
 }

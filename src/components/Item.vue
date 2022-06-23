@@ -9,14 +9,12 @@
 </template>
 
 <script>
-import { updateTrackerItem } from "../logic";
-
 /**
  * @typedef {import('./../items').Item} Item
  */
 export default {
     name: "Item",
-    
+
     props: {
         /** @type {{ new (): Item }} */
         item: {
@@ -52,14 +50,12 @@ export default {
             }
 
             this.item.state = state;
-
-            // Logic Check
-            updateTrackerItem(this.item);
+            this.$emit("itemEv", this.item);
         },
     },
     
     mounted() {
-        updateTrackerItem(this.item);
+        this.$emit("itemEv", this.item);
     },
 };
 </script>
@@ -82,5 +78,4 @@ div {
     user-select: none;
     cursor: pointer;
 }
-
 </style>
